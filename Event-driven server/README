@@ -1,0 +1,14 @@
+Event-driven Server
+
+In this part, a single-threaded server (async-tcpserver.c) that would monitor multiple
+sockets for new connections using an event-driven approach, and perform the same 3-way handshake with
+many concurrent clients. 
+
+The functionality of this server should be the same as that in multi-threaded server.
+
+Instead of using threads, the select() function are used to monitor multiple
+sockets and an array to maintain state information for dif erent clients. Please refer to Beej’s guide
+to network programming (http://beej.us/guide/bgnet/) on how to use the select() function.
+
+The async-tcpserver.c implementation should still take the same command line arguments as
+tcpserver.c. Also, tcp.sh should work as before to start multiple clients to test the server’s concurrency.
