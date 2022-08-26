@@ -1,0 +1,39 @@
+The Client and Single-threaded Server
+
+You will implement two files in this part: the client (tcpclient.c) and the server (tcpserver.c). The client
+takes 3 arguments as input: the server address, server port number, and an initial sequence number. The
+server takes in a server port argument, and should be started and be listening on the specified server port.
+You will implement a three-way handshake communication using TCP as follows:
+● Step 1: The client sends “HELLO X” to the server, where X is an initial sequence number.
+● Step 2: The server receives and prints the “HELLO X” message from the client, and sends
+“HELLO Y” to the client, where Y is X+1.
+● Step 3: The client receives “HELLO Y” message from the server, prints the message to screen,
+and does either one of the following:
+o If Y = X+1, the client sends “HELLO Z” to the server, where Z=Y+1, and closes the
+connection.
+o If Y != X+1, the client prints an “ERROR” message, and closes the connection.
+● Step 4: If the server receives the “HELLO Z” message from the client, and prints the message to
+screen. In addition, if Z != Y+1, prints an “ERROR”. The server then closes the connection.
+For simplicity, you can assume that the client and the server do not crash during the communication. You
+must also ensure that the format of all messages (e.g. “HELLO X”) is correct.
+End of Line characters: For project 3a, 3b and 3c, HELLO messages must not contain the EOL
+character '\n'. The EOL character should be printed separately after the message so that every message is
+on a separate line. This can be done with “fputc('\n', stdout)” after printing the message. Not
+following this convention could result in autograder failures, especially in cases where the client program
+is replaced with a test client.
+For printing to screen (stdout), make sure that you do “fflush(stdout)” right after you print the
+message (including the EOL character: see above). You could use printf, fputs, or other ways to print, but
+fflush must be used after that. This is because printing in Linux is buffered and may happen
+asynchronously. If a process does not exit gracefully, your intended prints may be lost. fflush ensures
+that your print executes immediately. In our autograder, we terminate the server process using SIGKILL
+but it evaluates your server output.
+Compilation: You should use the gcc command to compile tcpclient.c (gcc –o tcpclient
+tcpclient.c ) and tcpserver.c (gcc –o tcpserver tcpserver.c). Please always make sure
+that all compile warnings are fixed, as the autograder might fail to compile otherwise.
+Your implementation has to work in the Docker Container that you used in the previous assignments.
+You can run multiple clients and the server on the same machine. The server listens on its port, and when
+a client connects, a temporary port is assigned to the client-server communication.
+Generally, the server and a client in your implementation should work on any two hosts in the network.
+That being said, since you are running all within one virtual machine, you can assume the server is
+listening on a port of your choice, and clients and the server all run on the same machine with the same IP.
+You can use the loopback address 127.0.0.1 as the default IP address for the server and all clients.
