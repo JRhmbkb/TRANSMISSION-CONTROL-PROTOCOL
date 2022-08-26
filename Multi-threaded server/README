@@ -1,0 +1,14 @@
+Multi-threaded Server
+
+The new server (multi-tcpserver.c) can handle multiple concurrent client requests using multi-threading. In the server,
+when a client connection is accepted (via the accept API), a separate thread should be created to handle
+steps using the socket descriptor returned by the accept call. 
+
+Conceptually, this is just a refactoring effort from single-threaded server. The client communication
+code will be put into a thread function, which should be passed into pthread_create.
+
+To run the script, type:
+‘./tcp.sh <server_hostname> <port> <clients>’, where server_hostname is the
+hostname where your server is executing (it has been set to 127.0.0.1) and port is the port number that
+the server is listening to, and clients is the number of client requests. For example, ./tcp.sh
+127.0.0.1 1234 10 creates ten clients that connect to the server listening on port 1234.
